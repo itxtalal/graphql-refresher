@@ -1,16 +1,21 @@
 const { ApolloServer, gql } = require("apollo-server");
 
-// ? Scalar Types: String, Int, Float, Boolean, ID!
-
+//* Scalar Types: String, Int, Float, Boolean, ID!
 //? String - can return String or null
 //? String! - can only return String
 
+//* Array
+//? [String!] - Array cannot contain a null value
+//? [String]! - Should return an Array, cannot be null
+//? [String!]! - Should always return an array, having non null values
+
 const typeDefs = gql`
   type Query {
-    hello: String!
+    hello: String
     numberOfAnimals: Int
     price: Float
-    loggedIn: Boolean
+    loggedIn: Boolean!
+    names: [String!]
   }
 `;
 
@@ -18,8 +23,6 @@ const resolvers = {
   Query: {
     hello: () => {
       return "World";
-
-      //! return null;
     },
     numberOfAnimals: () => {
       return 2;
@@ -29,6 +32,10 @@ const resolvers = {
     },
     loggedIn: () => {
       return true;
+      //! return null;
+    },
+    names: () => {
+      return ["Talal", "Ali"];
     },
   },
 };
