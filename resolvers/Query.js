@@ -1,4 +1,4 @@
-const { products, categories } = require("../db");
+// const { products, categories } = require("../db");
 
 //* Scalar Types: String, Int, Float, Boolean, ID!
 //? String - can return String or null
@@ -10,18 +10,18 @@ const { products, categories } = require("../db");
 //? [String!]! - Should always return an array, having non null values
 
 exports.Query = {
-  hello: () => {
+  hello: (parent, args, context) => {
     return "World";
   },
-  products: () => {
+  products: (parent, args, { products }) => {
     return products;
   },
-  product: (parent, args, context) => {
-    console.log(parent);
-    console.log(args);
-    console.log(context);
+  product: (parent, { id }, { products }) => {
+    // console.log(parent);
+    // console.log(args);
+    // console.log(context);
 
-    const { id } = args;
+    // const { id } = args;
 
     const product = products.find((product) => product.id === id);
     if (!product) {
@@ -29,12 +29,11 @@ exports.Query = {
     }
     return product;
   },
-  categories: () => {
+  categories: (parent, args, { categories }) => {
     return categories;
   },
-  category: (parent, args, context) => {
-    const { id } = args;
-
+  category: (parent, { id }, context) => {
+    // const { id } = args;
     return categories.find((category) => category.id === id);
   },
 };
