@@ -14,6 +14,8 @@ const typeDefs = gql`
     hello: String
     products: [Product!]!
     product(id: ID!): Product
+    categories: [Category!]!
+    category(id: ID!): Category
   }
 
   # custom Object Type
@@ -25,6 +27,11 @@ const typeDefs = gql`
     price: Float!
     image: String!
     onSale: Boolean!
+  }
+
+  type Category {
+    id: ID!
+    name: String!
   }
 `;
 
@@ -41,13 +48,21 @@ const resolvers = {
       console.log(args);
       console.log(context);
 
-      const productId = args.id;
+      const { id } = args;
 
-      const product = products.find((product) => product.id === productId);
+      const product = products.find((product) => product.id === id);
       if (!product) {
         return null;
       }
       return product;
+    },
+    categories: () => {
+      return categories;
+    },
+    category: (parent, args, context) => {
+      const { id } = args;
+
+      return categories.find((category) => category.id === id);
     },
   },
 };
