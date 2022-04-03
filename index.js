@@ -27,6 +27,7 @@ const typeDefs = gql`
     price: Float!
     image: String!
     onSale: Boolean!
+    category: Category!
   }
 
   type Category {
@@ -67,6 +68,7 @@ const resolvers = {
     },
   },
 
+  //? For Non Scalar Fields, we have to define their resolvers separately, out of Query Resolvers Object
   Category: {
     //   parent of this child resolver (products) is Category
     products: (parent, args, context) => {
@@ -77,6 +79,15 @@ const resolvers = {
       const categoryId = parent.id;
 
       return products.filter((product) => product.categoryId === categoryId);
+    },
+  },
+  //? For Non Scalar Fields, we have to define their resolvers separately, out of Query Resolvers Object
+  Product: {
+    //   parent of this child resolver (category) is Product
+    category: (parent, args, context) => {
+      console.log("🚀 ~ parent", parent);
+      const categoryId = parent.categoryId;
+      return categories.find((category) => category.id === categoryId);
     },
   },
 };
