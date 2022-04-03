@@ -13,8 +13,22 @@ exports.Query = {
   hello: (parent, args, context) => {
     return "World";
   },
-  products: (parent, args, { products }) => {
-    return products;
+  products: (parent, { filter }, { products }) => {
+    // const {filter} = args;
+    let filteredProducts = products;
+
+    if (filter) {
+      if (filter.onSale === true) {
+        filteredProducts = filteredProducts.filter((product) => product.onSale);
+      }
+      if (filter.onSale === false) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.onSale === false
+        );
+      }
+    }
+
+    return filteredProducts;
   },
   product: (parent, { id }, { products }) => {
     // console.log(parent);
@@ -32,7 +46,7 @@ exports.Query = {
   categories: (parent, args, { categories }) => {
     return categories;
   },
-  category: (parent, { id }, context) => {
+  category: (parent, { id }, { categories }) => {
     // const { id } = args;
     return categories.find((category) => category.id === id);
   },
