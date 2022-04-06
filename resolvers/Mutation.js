@@ -77,4 +77,14 @@ exports.Mutation = {
     return true;
     //! If ID not found return false
   },
+
+  updateCategory: (parent, { id, input }, { db }) => {
+    const index = db.categories.findIndex((category) => category.id === id);
+    // console.log("🚀 ~ file: Mutation.js ~ line 85 ~ index", index);
+    db.categories[index] = {
+      ...db.categories[index],
+      ...input,
+    };
+    return db.categories[index];
+  },
 };
