@@ -5,7 +5,7 @@ exports.Category = {
   //   parent of this child resolver (products) is Category
   // Use Object Destructing directly in the function parameters, instead of doing in the function body.
   //* const { products } = context  OR (parent, args, { products })
-  products: ({ id: categoryId }, { filter }, { products }) => {
+  products: ({ id: categoryId }, { filter }, { db }) => {
     // console.log(parent);
     // console.log(args);
     // console.log(context);
@@ -13,7 +13,7 @@ exports.Category = {
     // const { products } = context;
     // const categoryId = parent.id;
 
-    const categoricalProducts = products.filter(
+    const categoricalProducts = db.products.filter(
       (product) => product.categoryId === categoryId
     );
 
