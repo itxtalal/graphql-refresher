@@ -61,11 +61,20 @@ exports.Mutation = {
       }
     });
     return true;
+    //! If ID not found return false
   },
+
   deleteProduct: (parent, { id }, { db }) => {
     db.products = db.products.filter((product) => product.id !== id);
     //? Delete Reviews related to that product
     db.reviews = db.reviews.filter((review) => review.productId !== id);
     return true;
+    //! If ID not found return false
+  },
+
+  deleteReview: (parent, { id }, { db }) => {
+    db.reviews = db.reviews.filter((review) => review.id !== id);
+    return true;
+    //! If ID not found return false
   },
 };
